@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Clone</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+    	body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.upload-area {
+    border: 2px dashed #007bff;
+    padding: 50px;
+    text-align: center;
+    background-color: #.;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.upload-area:hover {
+    background-color: #e9ecef;
+}
+
+#fileList {
+    margin-top: 20px;
+}
+
+#fileList li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #000;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>My Drive</h1>
+                <p>Upload, store, and share files</p>
+            </div>
+        </div>
+
+        <!-- File Upload and Drag & Drop Area -->
+        <div class="row mt-4">
+            <div class="col-md-8 offset-md-2">
+                <div class="upload-area" id="uploadfile">
+                    <h4>Drag & Drop Files Here</h4>
+                    <p>or</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">Browse Files</button>
+                    <input type="file" id="file-input" multiple hidden>
+                </div>
+            </div>
+        </div>
+
+        <!-- File List Section -->
+        <div class="row mt-5">
+            <div class="col-md-8 offset-md-2">
+                <h3>Your Files</h3>
+                <ul id="fileList" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    <script type="text/javascript">
+    	// Select the file input and file list elements
+const fileInput = document.getElementById('file-input');
+const fileList = document.getElementById('fileList');
+const uploadArea = document.getElementById('uploadfile');
+
+// Drag & drop functionality
+uploadArea.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    uploadArea.style.backgroundColor = '#e9ecef';
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.style.backgroundColor = '#fff';
+});
+
+uploadArea.addEventListener('drop', (event) => {
+    event.preventDefault();
+    uploadArea.style.backgroundColor = '#fff';
+    handleFiles(event.dataTransfer.files);
+});
+
+// Handle file input changes
+fileInput.addEventListener('change', (event) => {
+    handleFiles(event.target.files);
+});
+
+// Function to handle files
+function handleFiles(files) {
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+
+        // Create a list item for each file
+        let li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = file.name;
+
+        // Append the list item to the file list
+        fileList.appendChild(li);
+    }
+}
+    </script>
+</body>
+
+</html>
